@@ -1,0 +1,26 @@
+name: CodeQL Security
+
+on:
+  push:
+    branches: [main, ai-native-engineering-2027, security-review-gate-2027]
+  pull_request:
+  schedule:
+    - cron: '17 3 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Java security scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: java-kotlin
+          build-mode: none
+      - name: Analyze
+        uses: github/codeql-action/analyze@v4
